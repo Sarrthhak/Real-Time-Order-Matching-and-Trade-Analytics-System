@@ -60,17 +60,21 @@ The system was built to understand trading system internals and to prepare for q
 ## Architecture
 
 The system follows a clean, modular architecture with clear separation of concerns:
-┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
-│ OrderGenerator  │────▶│ MatchingEngine   │────▶│ AnalyticsService│
-│ (Simulator)     │      │ (Core Logic)    │      │   (Statistics)  │
-└─────────────────┘      └────────┬────────┘      └─────────────────┘
-                                  │
-                                  ▼
-                         ┌─────────────────┐
-                         │     OrderBook   │
-                         │ (Order Storage) │
-                         └─────────────────┘
-
++-------------------+     +-------------------+     +-------------------+
+|                   |     |                   |     |                   |
+|  OrderGenerator   +---->+  MatchingEngine   +---->+ AnalyticsService  |
+|   (Simulator)     |     |    (Core Logic)   |     |   (Statistics)    |
+|                   |     |                   |     |                   |
++-------------------+     +---------+---------+     +-------------------+
+                                   |
+                                   |
+                                   v
+                           +-----------------+
+                           |                 |
+                           |  OrderBook      |
+                           | (Order Storage) |
+                           |                 |
+                           +-----------------+
 ### Component Breakdown
 - **Model Layer**: Defines core entities (Order, Trade)
 - **Engine Layer**: Contains business logic (OrderBook, MatchingEngine)
